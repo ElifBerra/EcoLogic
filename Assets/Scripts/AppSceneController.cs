@@ -5,48 +5,66 @@ using UnityEngine.UI;
 public class AppSceneController : MonoBehaviour
 {
     [Header("AppScene Buttons")]
-    public Button pastBillsScene;
-    public Button BackButton; 
+    public Button pastBillsButton;
+    public Button scanBillButton;
+    public Button backButton;
 
     void Start()
     {
-        if (pastBillsScene == null)
+        if (pastBillsButton == null)
         {
-            Debug.LogError("Can not found pastBillsScene!");
+            Debug.LogError("PastBillsButton not found!");
         }
         else
         {
-            pastBillsScene.onClick.AddListener(SkipToPastBillsScene);
+            pastBillsButton.onClick.AddListener(SkipToPastBillsScene);
         }
 
-        if (BackButton != null)
+        if (scanBillButton != null)
         {
-            BackButton.onClick.AddListener(SkipToStartingScene);
+            scanBillButton.onClick.AddListener(ScanBillAction);
+        }
+
+        if (backButton != null)
+        {
+            backButton.onClick.AddListener(SkipToStartingScene);
         }
     }
 
     public void SkipToPastBillsScene()
     {
-        Debug.Log("Skip To Past BillsScene...");
-        SceneManager.LoadScene("pastBillsScene");
+        Debug.Log("Skip To PastBillsScene...");
+        SceneManager.LoadScene("PastBillsScene");
     }
 
     public void SkipToStartingScene()
     {
-        Debug.Log("Skip To Starting Scene...");
-        SceneManager.LoadScene("startingScene");
+        Debug.Log("Back To StartingScene...");
+        SceneManager.LoadScene("StartingScene");
+    }
+
+    public void ScanBillAction()
+    {
+        Debug.Log("Fatura tarama islemi baslatiliyor...");
+        // Burada fatura tarama islemi kodlari olacak
+        SceneManager.LoadScene("ScanBillsScene");
     }
 
     void OnDestroy()
     {
-        if (pastBillsScene != null)
+        if (pastBillsButton != null)
         {
-            pastBillsScene.onClick.RemoveListener(SkipToPastBillsScene);
+            pastBillsButton.onClick.RemoveListener(SkipToPastBillsScene);
         }
 
-        if (BackButton != null)
+        if (scanBillButton != null)
         {
-            BackButton.onClick.RemoveListener(SkipToStartingScene);
+            scanBillButton.onClick.RemoveListener(ScanBillAction);
+        }
+
+        if (backButton != null)
+        {
+            backButton.onClick.RemoveListener(SkipToStartingScene);
         }
     }
 }

@@ -2,34 +2,33 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// StartingScene sahnesindeki GameManager objesine ekleyin
 public class StartingSceneController : MonoBehaviour
 {
-    [Header("InformationCardButton")]
+    [Header("Information Card Button")]
     public Button InformationCardButton;
 
     void Start()
     {
         if (InformationCardButton == null)
         {
-            Debug.LogError("Can not found InformationCardButton!");
+            Debug.LogError("InformationCardButton not found");
             return;
         }
 
-        InformationCardButton.onClick.AddListener(SkiptoAppScene);
+        InformationCardButton.onClick.AddListener(SkipToAppScene);
     }
 
-    public void SkiptoAppScene()
+    public void SkipToAppScene()
     {
-        Debug.Log("SkiptoAppScene...");
-        SceneManager.LoadScene("appScene");
+        Debug.Log("Skip To AppScene...");
+        SceneManager.LoadScene("AppScene");
     }
 
     void OnDestroy()
     {
         if (InformationCardButton != null)
         {
-            InformationCardButton.onClick.RemoveListener(SkiptoAppScene);
+            InformationCardButton.onClick.RemoveListener(SkipToAppScene);
         }
     }
 }
