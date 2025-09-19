@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class AppSceneController : MonoBehaviour
 {
@@ -8,9 +9,15 @@ public class AppSceneController : MonoBehaviour
     public Button pastBillsButton;
     public Button scanBillButton;
     public Button backButton;
+    public Button logoutButton;
+
+    [Header("Welcome Text")]
+    public TextMeshProUGUI welcomeText;
 
     void Start()
     {
+        DisplayWelcomeMessage();
+
         if (pastBillsButton == null)
         {
             Debug.LogError("PastBillsButton not found!");
@@ -28,6 +35,20 @@ public class AppSceneController : MonoBehaviour
         if (backButton != null)
         {
             backButton.onClick.AddListener(SkipToStartingScene);
+        }
+
+        if (logoutButton != null)
+        {
+            logoutButton.onClick.AddListener(LogoutUser);
+        }
+    }
+
+    private void DisplayWelcomeMessage()
+    {
+        if (welcomeText != null)
+        {
+            string username = PlayerPrefs.GetString("Username", "Kullanýcý");
+            welcomeText.text = $"Hoþ geldiniz, {username}!";
         }
     }
 
@@ -50,6 +71,12 @@ public class AppSceneController : MonoBehaviour
         SceneManager.LoadScene("ScanBillsScene");
     }
 
+    public void LogoutUser()
+    {
+        Debug.Log("User logging out...");
+        GameManager.Logout();
+    }
+
     void OnDestroy()
     {
         if (pastBillsButton != null)
@@ -65,6 +92,11 @@ public class AppSceneController : MonoBehaviour
         if (backButton != null)
         {
             backButton.onClick.RemoveListener(SkipToStartingScene);
+        }
+
+        if (logoutButton != null)
+        {
+            logoutButton.onClick.RemoveListener(LogoutUser);
         }
     }
 }
