@@ -14,6 +14,10 @@ public class LoginSceneController : MonoBehaviour
     public Toggle rememberMeToggle;
     public TextMeshProUGUI errorMessage;
 
+    [Header("Navigation Buttons")]
+    public Button registerButton;         // "Kaydolun"
+    public Button forgotPasswordButton;   // "Þifremi Unuttum"
+
     // Geçici database - Daha sonra gerçek database ile deðiþtirilecek
     private Dictionary<string, string> userDatabase = new Dictionary<string, string>()
     {
@@ -68,11 +72,13 @@ public class LoginSceneController : MonoBehaviour
 
     private void SetupEventListeners()
     {
+        // Giriþ
         if (loginButton != null)
         {
             loginButton.onClick.AddListener(LoginUser);
         }
 
+        // Klavye Enter desteði
         if (usernameInput != null)
         {
             usernameInput.onEndEdit.AddListener(delegate {
@@ -97,6 +103,23 @@ public class LoginSceneController : MonoBehaviour
                 {
                     LoginUser();
                 }
+            });
+        }
+
+        // --- Yeni: Navigasyon butonlarý ---
+        if (registerButton != null)
+        {
+            registerButton.onClick.AddListener(() =>
+            {
+                SceneManager.LoadScene(SceneNames.Register);
+            });
+        }
+
+        if (forgotPasswordButton != null)
+        {
+            forgotPasswordButton.onClick.AddListener(() =>
+            {
+                SceneManager.LoadScene(SceneNames.ForgotPassword);
             });
         }
     }
@@ -138,7 +161,7 @@ public class LoginSceneController : MonoBehaviour
             return;
         }
 
-        // Database kontrolü
+        // Database kontrolü (geçici)
         if (ValidateUser(username, password))
         {
             // Baþarýlý giriþ
@@ -164,7 +187,7 @@ public class LoginSceneController : MonoBehaviour
             PlayerPrefs.Save();
 
             // StartingScene'e geç
-            SceneManager.LoadScene("StartingScene");
+            SceneManager.LoadScene(SceneNames.Starting);
         }
         else
         {
@@ -177,14 +200,6 @@ public class LoginSceneController : MonoBehaviour
         // Geçici database kontrolü - Daha sonra gerçek database sorgusu ile deðiþtirilecek
         return userDatabase.ContainsKey(username) && userDatabase[username] == password;
     }
-
-    // Gerçek database entegrasyonu için hazýr method
-    // private IEnumerator ValidateUserFromDatabase(string username, string password)
-    // {
-    //     // Web API çaðrýsý burada yapýlacak
-    //     // yield return new WaitForSeconds(1f); // API yanýt bekleme simülasyonu
-    //     // return apiResponse.isValid;
-    // }
 
     private void ShowErrorMessage(string message)
     {
@@ -213,6 +228,15 @@ public class LoginSceneController : MonoBehaviour
         if (loginButton != null)
         {
             loginButton.onClick.RemoveListener(LoginUser);
+        }
+        if (registerButton != null)
+        {
+            // Ayný lambda’yý tekrar yaratmak yerine komple tüm listener’larý kaldýrmak güvenlidir
+            registerButton.onClick.RemoveAllListeners();
+        }
+        if (forgotPasswordButton != null)
+        {
+            forgotPasswordButton.onClick.RemoveAllListeners();
         }
     }
 }

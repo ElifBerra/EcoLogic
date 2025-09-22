@@ -8,11 +8,12 @@ public class ScanBillsSceneController : MonoBehaviour
 {
     [Header("Scan UI Elements")]
     public Button scanButton;
+    public Button captureButton;          // Fotoðraf çekme butonu
     public Button backToAppButton;
     public Button galleryButton;
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI instructionText;
-    public Image previewImage;
+    public RawImage cameraPreview;        // Kamera görüntüsü için
 
     [Header("Processing UI")]
     public GameObject processingPanel;
@@ -20,7 +21,7 @@ public class ScanBillsSceneController : MonoBehaviour
     public TextMeshProUGUI progressText;
 
     private bool isScanning = false;
-    private Texture2D scannedTexture;
+    private WebCamTexture webCamTexture;
 
     void Start()
     {
@@ -54,36 +55,118 @@ public class ScanBillsSceneController : MonoBehaviour
 
     private void SetupEventListeners()
     {
-        if (scanButton != null)
-        {
-            scanButton.onClick.AddListener(StartScanning);
-        }
-
-        if (backToAppButton != null)
-        {
-            backToAppButton.onClick.AddListener(BackToAppScene);
-        }
-
-        if (galleryButton != null)
-        {
-            galleryButton.onClick.AddListener(SelectFromGallery);
-        }
+        if (scanButton != null) scanButton.onClick.AddListener(StartScanning);
+        if (captureButton != null) captureButton.onClick.AddListener(CapturePhoto);
+        if (backToAppButton != null) backToAppButton.onClick.AddListener(BackToAppScene);
+        if (galleryButton != null) galleryButton.onClick.AddListener(SelectFromGallery);
     }
 
     public void StartScanning()
     {
         if (isScanning) return;
 
-        Debug.Log("Fatura tarama baþlatýlýyor...");
-
+        Debug.Log("Kamera açýlýyor...");
         if (statusText != null)
         {
             statusText.text = "Kamera açýlýyor...";
             statusText.color = Color.yellow;
         }
 
-        // Kamera iþlemi simülasyonu - Gerçek kamera entegrasyonu burada olacak
-        StartCoroutine(SimulateCameraCapture());
+        StartCamera();
+    }
+
+    private void StartCamera()
+    {
+        WebCamDevice[] devices = WebCamTexture.devices;
+        if (devices.Length == 0)
+        {
+            if (statusText != null)
+                statusText.text = "Tarayýcý kameraya eriþemedi. Lütfen izin verin.";
+            return;
+        }
+
+        webCamTexture = new WebCamTexture(devices[0].name, 1280, 720, 30);
+        cameraPreview.texture = webCamTexture;
+        cameraPreview.material.mainTexture = webCamTexture;
+        webCamTexture.Play();
+
+        StartCoroutine(CheckCameraPermission());
+    }
+
+    private IEnumerator CheckCameraPermission()
+    {
+        // Tarayýcý izin popup’una yanýt verene kadar bekle
+        float timeout = 5f;
+        while (!webCamTexture.isPlaying && timeout > 0f)
+        {
+            timeout -= Time.deltaTime;
+            yield return null;
+        }
+
+        if (!webCamTexture.isPlaying)
+        {
+            if (statusText != null)
+                statusText.text = "Kamera baþlatýlamadý (izin reddedilmiþ olabilir).";
+        }
+        else
+        {
+            if (statusText != null)
+            {
+                statusText.text = "Kamera açýk";
+                statusText.color = Color.green;
+            }
+            isScanning = true;
+        }
+    }
+
+
+
+    private void StopCamera()
+    {
+        if (webCamTexture != null)
+        {
+            webCamTexture.Stop();
+            Destroy(webCamTexture);
+            webCamTexture = null;
+        }
+        if (cameraPreview != null) cameraPreview.texture = null;
+        isScanning = false;
+    }
+
+    public void CapturePhoto()
+    {
+        if (webCamTexture == null || !webCamTexture.isPlaying)
+        {
+            Debug.LogWarning("Kamera çalýþmýyor!");
+            return;
+        }
+
+        // WebCamTexture’den Texture2D üret
+        Texture2D photo = new Texture2D(webCamTexture.width, webCamTexture.height);
+        photo.SetPixels(webCamTexture.GetPixels());
+        photo.Apply();
+
+        // JPG olarak encode et
+        byte[] bytes = photo.EncodeToJPG();
+
+        // Kaydetme path’i
+        string filename = "Bill_" + System.DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".jpg";
+        string path = System.IO.Path.Combine(Application.persistentDataPath, filename);
+        System.IO.File.WriteAllBytes(path, bytes);
+
+        Debug.Log("Fotoðraf kaydedildi: " + path);
+
+        if (statusText != null)
+        {
+            statusText.text = "Fotoðraf çekildi ve kaydedildi!";
+            statusText.color = Color.green;
+        }
+
+        // Ýstersen burada DatabaseManager.UploadBillForAnalysis() çaðýrabilirsin
+        // StartCoroutine(DatabaseManager.Instance.UploadBillForAnalysis(bytes, OnAnalysisResult));
+
+        // Test için fotoðraf iþleme simülasyonu
+        ProcessScannedBill();
     }
 
     public void SelectFromGallery()
@@ -91,32 +174,14 @@ public class ScanBillsSceneController : MonoBehaviour
         if (isScanning) return;
 
         Debug.Log("Galeriden fatura seçiliyor...");
-
         if (statusText != null)
         {
             statusText.text = "Galeri açýlýyor...";
             statusText.color = Color.yellow;
         }
 
-        // Galeri seçimi simülasyonu - Gerçek galeri entegrasyonu burada olacak
+        // Þimdilik simülasyon
         StartCoroutine(SimulateGallerySelection());
-    }
-
-    private IEnumerator SimulateCameraCapture()
-    {
-        isScanning = true;
-
-        yield return new WaitForSeconds(1f);
-
-        if (statusText != null)
-        {
-            statusText.text = "Fatura çekiliyor...";
-        }
-
-        yield return new WaitForSeconds(2f);
-
-        // Simulated image capture success
-        ProcessScannedBill();
     }
 
     private IEnumerator SimulateGallerySelection()
@@ -124,24 +189,15 @@ public class ScanBillsSceneController : MonoBehaviour
         isScanning = true;
 
         yield return new WaitForSeconds(0.5f);
-
-        if (statusText != null)
-        {
-            statusText.text = "Fatura seçildi, iþleniyor...";
-        }
+        if (statusText != null) statusText.text = "Fatura seçildi, iþleniyor...";
 
         yield return new WaitForSeconds(1f);
-
-        // Simulated gallery selection success
         ProcessScannedBill();
     }
 
     private void ProcessScannedBill()
     {
-        if (processingPanel != null)
-        {
-            processingPanel.SetActive(true);
-        }
+        if (processingPanel != null) processingPanel.SetActive(true);
 
         if (statusText != null)
         {
@@ -161,74 +217,39 @@ public class ScanBillsSceneController : MonoBehaviour
             progress += Random.Range(0.05f, 0.15f);
             progress = Mathf.Clamp01(progress);
 
-            if (progressSlider != null)
-            {
-                progressSlider.value = progress;
-            }
-
-            if (progressText != null)
-            {
-                progressText.text = $"Analiz ediliyor... %{Mathf.RoundToInt(progress * 100)}";
-            }
-
-            // Farklý aþamalarda farklý mesajlar
-            if (progress < 0.3f && statusText != null)
-            {
-                statusText.text = "Fatura metni okunuyor...";
-            }
-            else if (progress < 0.6f && statusText != null)
-            {
-                statusText.text = "Veriler analiz ediliyor...";
-            }
-            else if (progress < 0.9f && statusText != null)
-            {
-                statusText.text = "Sonuçlar hazýrlanýyor...";
-            }
+            if (progressSlider != null) progressSlider.value = progress;
+            if (progressText != null) progressText.text = $"Analiz ediliyor... %{Mathf.RoundToInt(progress * 100)}";
 
             yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
         }
 
-        // Ýþlem tamamlandý
         if (statusText != null)
         {
             statusText.text = "Analiz tamamlandý!";
             statusText.color = Color.green;
         }
-
-        if (progressText != null)
-        {
-            progressText.text = "Tamamlandý!";
-        }
+        if (progressText != null) progressText.text = "Tamamlandý!";
 
         yield return new WaitForSeconds(1f);
 
-        // Analiz sonuçlarýný kaydet (geçici)
         SaveAnalysisResults();
-
-        // AppScene'e geri dön
         BackToAppScene();
     }
 
     private void SaveAnalysisResults()
     {
-        // Geçici analiz sonuçlarý - Database'e kaydedilecek
         string analysisResult = "Elektrik Faturasý - Kasým 2024\n" +
                               "Tutar: 245.67 TL\n" +
                               "Tüketim: 380 kWh\n" +
                               "AI Önerisi: %15 tasarruf potansiyeli tespit edildi.";
 
-        // PlayerPrefs ile geçici kaydetme - Database entegrasyonu sonrasý deðiþtirilecek
         string existingBills = PlayerPrefs.GetString("ScannedBills", "");
         string newBillEntry = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "|" + analysisResult;
 
         if (!string.IsNullOrEmpty(existingBills))
-        {
             existingBills += "###" + newBillEntry;
-        }
         else
-        {
             existingBills = newBillEntry;
-        }
 
         PlayerPrefs.SetString("ScannedBills", existingBills);
         PlayerPrefs.Save();
@@ -240,8 +261,7 @@ public class ScanBillsSceneController : MonoBehaviour
     {
         if (isScanning)
         {
-            // Tarama iþlemini iptal et
-            StopAllCoroutines();
+            StopCamera();
             isScanning = false;
         }
 
@@ -251,33 +271,11 @@ public class ScanBillsSceneController : MonoBehaviour
 
     void OnDestroy()
     {
-        if (scanButton != null)
-        {
-            scanButton.onClick.RemoveListener(StartScanning);
-        }
+        if (scanButton != null) scanButton.onClick.RemoveListener(StartScanning);
+        if (captureButton != null) captureButton.onClick.RemoveListener(CapturePhoto);
+        if (backToAppButton != null) backToAppButton.onClick.RemoveListener(BackToAppScene);
+        if (galleryButton != null) galleryButton.onClick.RemoveListener(SelectFromGallery);
 
-        if (backToAppButton != null)
-        {
-            backToAppButton.onClick.RemoveListener(BackToAppScene);
-        }
-
-        if (galleryButton != null)
-        {
-            galleryButton.onClick.RemoveListener(SelectFromGallery);
-        }
+        StopCamera();
     }
-}
-
-// AI Analysis sonuçlarý için veri yapýsý
-[System.Serializable]
-public class BillAnalysisData
-{
-    public string billType;
-    public string date;
-    public float amount;
-    public float consumption;
-    public string unit;
-    public string aiSuggestion;
-    public float savingPotential;
-    public string analysisDetails;
 }

@@ -52,6 +52,16 @@ public class AppSceneController : MonoBehaviour
         }
     }
 
+    public void LoadRegisterScene()
+    {
+        SceneManager.LoadScene("RegisterScene");
+    }
+
+    public void LoadForgotPasswordScene()
+    {
+        SceneManager.LoadScene("ForgotPasswordScene");
+    }
+
     public void SkipToPastBillsScene()
     {
         Debug.Log("Skip To PastBillsScene...");
@@ -70,6 +80,7 @@ public class AppSceneController : MonoBehaviour
         // Burada fatura tarama islemi kodlari olacak
         SceneManager.LoadScene("ScanBillsScene");
     }
+
 
     public void LogoutUser()
     {

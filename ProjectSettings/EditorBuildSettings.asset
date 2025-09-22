@@ -20,6 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScanBillsScene.unity
     guid: 2b149c5f073ca904fa05911f6a219cc4
+  - enabled: 1
+    path: Assets/Scenes/ForgotPasswordScene.unity
+    guid: 74010d60232e71f46bf3c7c0d32684a3
+  - enabled: 1
+    path: Assets/Scenes/RegisterScene.unity
+    guid: 4b29677a91e8f6f4eb054b67745b8dfb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
