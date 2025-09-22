@@ -34,7 +34,6 @@ public class ScanBillsSceneController : MonoBehaviour
         if (statusText != null)
         {
             statusText.text = "Fatura taramaya hazýr";
-            statusText.color = Color.green;
         }
 
         if (instructionText != null)
@@ -65,10 +64,14 @@ public class ScanBillsSceneController : MonoBehaviour
     {
         if (isScanning) return;
 
+       
+
         Debug.Log("Kamera açýlýyor...");
         if (statusText != null)
         {
             statusText.text = "Kamera açýlýyor...";
+
+            cameraPreview.gameObject.SetActive(true);
             statusText.color = Color.yellow;
         }
 
