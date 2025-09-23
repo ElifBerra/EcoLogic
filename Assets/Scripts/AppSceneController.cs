@@ -8,7 +8,6 @@ public class AppSceneController : MonoBehaviour
     [Header("AppScene Buttons")]
     public Button pastBillsButton;
     public Button scanBillButton;
-    public Button backButton;
     public Button logoutButton;
 
     [Header("Welcome Text")]
@@ -32,10 +31,6 @@ public class AppSceneController : MonoBehaviour
             scanBillButton.onClick.AddListener(ScanBillAction);
         }
 
-        if (backButton != null)
-        {
-            backButton.onClick.AddListener(SkipToStartingScene);
-        }
 
         if (logoutButton != null)
         {
@@ -98,11 +93,6 @@ public class AppSceneController : MonoBehaviour
         if (scanBillButton != null)
         {
             scanBillButton.onClick.RemoveListener(ScanBillAction);
-        }
-
-        if (backButton != null)
-        {
-            backButton.onClick.RemoveListener(SkipToStartingScene);
         }
 
         if (logoutButton != null)
