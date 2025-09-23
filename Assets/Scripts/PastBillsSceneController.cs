@@ -184,27 +184,6 @@ public class PastBillsSceneController : MonoBehaviour
             viewDetailsButton.onClick.AddListener(() => ShowBillDetails(billData));
         }
 
-        // Fatura tipine göre ikon ayarla (gelecekte database'den gelecek)
-        if (billTypeIcon != null)
-        {
-            // Default ikon rengi - fatura tipine göre deðiþecek
-            if (billData.analysisResult.Contains("Elektrik"))
-            {
-                billTypeIcon.color = Color.yellow;
-            }
-            else if (billData.analysisResult.Contains("Su"))
-            {
-                billTypeIcon.color = Color.blue;
-            }
-            else if (billData.analysisResult.Contains("Doðalgaz"))
-            {
-                billTypeIcon.color = Color.red;
-            }
-            else
-            {
-                billTypeIcon.color = Color.gray;
-            }
-        }
     }
 
     private void ShowBillDetails(BillData billData)
@@ -249,7 +228,6 @@ public class PastBillsSceneController : MonoBehaviour
         formattedDetails += "• Önceki aya göre %8 azalma\n";
         formattedDetails += "• Hedefinize %92 yakýnsýnýz\n\n";
 
-        formattedDetails += "<color=green><b>EcoLogic Skoru: 7.2/10</b></color>";
 
         return formattedDetails;
     }

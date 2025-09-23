@@ -24,7 +24,7 @@ public class LoginSceneController : MonoBehaviour
         {"admin", "admin123"},
         {"test", "test123"},
         {"user1", "password1"},
-        {"ecologic", "ecologic2024"}
+        {"ecologic", "ecologic2025"}
     };
 
     void Start()

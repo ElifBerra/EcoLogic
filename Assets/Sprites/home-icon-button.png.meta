@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: a10659db0f2e4f54bac4fbb4a1b93e4c
+guid: 3e132763c8e21be4db305672037fd2a5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5541115070504525306
-    second: galleryimage_0
+      213: 3562188533141578710
+    second: home-icon-button_0
+  - first:
+      213: -4728191950998514611
+    second: home-icon-button_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +116,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: galleryimage_0
+      name: home-icon-button_0
       rect:
         serializedVersion: 2
-        x: 25
-        y: 25
-        width: 462
-        height: 462
+        x: 0
+        y: 14
+        width: 512
+        height: 482
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 602a30393310a13b0800000000000000
-      internalID: -5541115070504525306
+      spriteID: 6d3afdcf89f6f6130800000000000000
+      internalID: 3562188533141578710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: home-icon-button_1
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 16
+        width: 374
+        height: 365
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d445fdab876126eb0800000000000000
+      internalID: -4728191950998514611
       vertices: []
       indices: 
       edges: []
@@ -138,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 904e092615df9a3438230663167f7c4a
     internalID: 0
     vertices: []
     indices: 
@@ -147,7 +172,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      home-icon-button_0: 3562188533141578710
+      home-icon-button_1: -4728191950998514611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

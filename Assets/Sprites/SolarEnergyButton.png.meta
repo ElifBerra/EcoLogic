@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: b67e13baeb3d0bb41927680bbf1d0303
+guid: a6421854596e01e448bfd211cf23eec6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5015854478602826695
-    second: arrow-left_0
+      213: -447017390601478410
+    second: SolarEnergyButton_0
+  - first:
+      213: -5123781256397745263
+    second: SolarEnergyButton_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: arrow-left_0
+      name: SolarEnergyButton_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 25
-        width: 512
-        height: 463
+        x: 18
+        y: 19
+        width: 478
+        height: 475
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +131,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7c37c2ab215eb9540800000000000000
-      internalID: 5015854478602826695
+      spriteID: 6fed6c83d00ebc9f0800000000000000
+      internalID: -447017390601478410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SolarEnergyButton_1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 18
+        width: 475
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1939b91281ca4e8b0800000000000000
+      internalID: -5123781256397745263
       vertices: []
       indices: 
       edges: []
@@ -138,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 656bba096b99f374f979315d0f638a9e
+    spriteID: 76975ae374c8d604eb7d20135785c76c
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      arrow-left_0: 5015854478602826695
+      SolarEnergyButton_0: -447017390601478410
+      SolarEnergyButton_1: -5123781256397745263
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
