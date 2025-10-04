@@ -429,8 +429,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 100, y: 40}
+  m_AnchoredPosition: {x: -67.71655, y: 45.290833}
+  m_SizeDelta: {x: 235.433, y: 70.5816}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &157252846
 MonoBehaviour:
@@ -2780,6 +2780,7 @@ GameObject:
   - component: {fileID: 1758331687}
   - component: {fileID: 1758331689}
   - component: {fileID: 1758331688}
+  - component: {fileID: 1758331690}
   m_Layer: 5
   m_Name: NavigationPanel
   m_TagString: Untagged
@@ -2849,6 +2850,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758331686}
   m_CullTransparentMesh: 1
+--- !u!114 &1758331690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758331686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100831e5901eebe47a608a20650eef2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  homeButton: {fileID: 1572209843}
+  pastBillsButton: {fileID: 1188361538}
+  scanButton: {fileID: 1677437427}
+  logoutButton: {fileID: 87035071}
+  solarPanelButton: {fileID: 667434169}
+  clickSfx: {fileID: 0}
 --- !u!1 &1811094172
 GameObject:
   m_ObjectHideFlags: 0

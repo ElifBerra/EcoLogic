@@ -10,4 +10,6 @@ public static class SceneNames
     public const string App = "AppScene";
     public const string PastBills = "PastBillsScene";
     public const string ScanBills = "ScanBillsScene";
+    public const string SolarPanel = "SolarPanelScene";
+
 }

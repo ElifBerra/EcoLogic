@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      photo-camerabutton_0: 7603068351826206237
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

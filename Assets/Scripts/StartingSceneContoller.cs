@@ -15,11 +15,12 @@ public class StartingSceneController : MonoBehaviour
 
     // Geçici information data - Database'den gelecek
     private string[] informationMessages = {
-        "EcoLogic ile faturalarýnýzý kolayca tarayýn ve analiz edin!",
-        "Enerji tüketiminizi takip edin, tasarruf edin.",
-        "AI destekli fatura analizi ile harcamalarýnýzý optimize edin.",
-        "Çevre dostu yaþam için enerji verimliliði önerilerimizi keþfedin.",
-        "Geçmiþ faturalarýnýzý karþýlaþtýrýn ve trend analizinizi görün."
+        //"EcoLogic ile faturalarýnýzý kolayca tarayýn ve analiz edin!",
+        //"Enerji tüketiminizi takip edin, tasarruf edin.",
+        //"AI destekli fatura analizi ile harcamalarýnýzý optimize edin.",
+        //"Çevre dostu yaþam için enerji verimliliði önerilerimizi keþfedin.",
+        //"Geçmiþ faturalarýnýzý karþýlaþtýrýn ve trend analizinizi görün."
+        "?? Hatýrlatma: Kullandýðýnýz elektriðin büyük kýsmý kömür ve doðalgazdan geliyor; temiz bir gelecek için yenilenebilir enerjiye yönelme zamaný!"
     };
 
     void Start()

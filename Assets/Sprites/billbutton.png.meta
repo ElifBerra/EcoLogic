@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      billbutton_0: -3099359923899338013
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

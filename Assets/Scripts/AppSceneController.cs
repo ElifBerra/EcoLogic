@@ -43,7 +43,7 @@ public class AppSceneController : MonoBehaviour
         if (welcomeText != null)
         {
             string username = PlayerPrefs.GetString("Username", "Kullanýcý");
-            welcomeText.text = $"Hoþ geldiniz, {username}!";
+            
         }
     }
 
